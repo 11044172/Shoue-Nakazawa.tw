@@ -1,0 +1,460 @@
+body{
+  margin:0px;
+  width:100%;
+
+  padding: 0px;
+    
+}
+header {
+    background-color: white;
+    position: fixed;
+    height: 80px;
+    top: 0px;
+    opacity: 1;
+    width: 100%;
+    z-index: 10;
+    color: black;
+    
+
+  }
+li{
+    list-style: none;
+}
+.header_rogo{
+    height: 60px;
+    padding-left: 10px;
+    float: left;
+    
+    
+    
+  
+}
+.header_list li{
+   
+    padding-left: 10px;
+    padding-top: 20px;
+    padding-right:15px;
+    float: right;
+}
+.header_btn{
+    color: black;
+    text-decoration-line:none;
+}
+
+.language{
+    display: inline-block;
+    padding-right: 40px;
+    margin-left: 100px;
+    color: black;
+    text-decoration-line:none;
+
+}
+
+.top-wrapper{
+    width: 100%;
+    display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    margin-top: 100px;
+    position: fixed;
+    background-color: white;
+    z-index: -1;
+}
+
+.picture{
+    border-radius: 30px;
+    height: 480px;
+    width: 360px;  
+    
+    
+}
+
+
+.meigen{
+    text-align: center;      
+    margin-left: auto;
+    margin-right: auto;  
+    font-family: 'Alegreya Sans SC', sans-serif;
+    font-size: 26pt;
+}
+
+.middle-wrapper1{
+    width:100% ;
+    z-index: 2;
+    background-color: black;
+    padding-top: 20px;
+    margin-top: px;
+    color: white;
+    height: 800px;
+    position: relative;
+    top: 600px;
+}
+       
+        
+    
+
+
+.my-status{
+    margin-top: 300px;
+    margin-left: 80px;
+    float: left;
+}
+.three{
+    margin-left: 15%;
+    margin-top: 150px;
+}
+
+.wrapper-title{
+    writing-mode: vertical-rl;
+    margin: 100px;
+    margin-left: 50px;
+    float: left; 
+    font-size: 55px;
+}
+
+.self-itoroduction{
+    padding-top: 150px;
+    
+}
+.sd{
+    font-size: 35px;
+}
+.sd1{
+    
+    width: 380px;
+    margin-left: 80px;
+    float: left;
+    white-space:pre;
+    
+}
+.middle-wrapper2{
+    height: 2550px;
+    z-index: 3;
+    background-color: white;
+    
+    margin-top: 600px;
+}
+.two{
+    color:black;
+}
+.four{
+    height: 330px;
+    width: 495px;  
+    margin-left: 60px;
+}
+
+.skil{
+    margin-left: 250px;
+    margin-top: 100px;
+  
+}
+.piano{
+    
+    margin-left: 350px;
+    
+    float: left;
+    width: 352px;
+    word-wrap: break-word;
+      
+}
+.picture-piano{
+    width: 322px;
+    height: 188px;
+    padding-left: 15px;
+}
+
+.soft-tennis{
+    margin-left: 850px;
+    margin-top: 150px;
+    width: 352px;
+    word-wrap: break-word;
+
+    
+    
+}
+.picture-tennis{
+    width: 322px;
+    height: 188px;
+    padding-left: 15px;
+}
+.volleyball{
+    margin-left: 350px;
+    z-index:1 ;
+    float: left;
+    width: 352px;
+    word-wrap: break-word;
+    position:relative;
+    bottom: 140px;      
+}
+.chinese{
+    margin-left: 850px;
+    margin-top: 150px;
+    width: 352px;
+    word-wrap: break-word;
+}
+.cooking{
+    margin-top: 150px;
+    float: left;
+    width: 352px;
+    word-wrap: break-word;
+    position: relative;
+    bottom: 140px;
+    right: 350px;
+}
+.picture-cooking{
+    width: 322px;
+    height: 188px;
+    padding-left: 15px;
+}
+
+
+.btn{
+    background-color: #000;
+    color: white;
+    font-size: 20px;
+    padding-top: 8px;
+    padding:8px,24px;
+    display:inline-block;
+    border: 1px ridge black;
+    text-decoration-line:none;
+    width: 350px;
+    height: 40px;
+    text-align: center;
+    padding-right: 0px;
+    margin-top: 15px;
+}
+.btn:hover{
+    background-color:white;
+    color: black;
+    font-size: 20px;
+    padding-top: 8px;
+    padding:8px,24px;
+    display:inline-block;
+    border: 1px ridge black;
+    text-decoration-line:none;
+    width: 350px;
+    height: 40px;
+    text-align: center;
+    margin-top: 15px;
+    
+}
+.middle-wrapper3{
+    width: 100%;
+    background-color: black;
+    height: 4300px;
+    color: white;
+    position:relative;
+    bottom:100px;
+    margin-bottom: -150px;
+    
+}
+.xueli{
+    margin:0;
+    float: left;
+    font-size: 45px;
+    margin-top: 200px;
+}
+.line{
+    margin-left: 15px;
+    margin-top: 250px;
+    margin-right: 200px;
+    float: left;
+}
+.timeline{
+	max-width: 700px;
+	width:100%;
+	margin:50px auto;
+	padding:0 30px;
+    position: absolute;
+    top: 300px;
+    left: 350px;
+}
+.second{
+    position: relative;
+    top:50px;
+    margin-bottom: 100px;
+    right: 50px;
+   
+    
+
+}
+.work{
+    
+    position: relative;
+    top: 1900px;
+    margin-bottom: 2850px;
+    right: 100px;
+}
+.ex{
+    float: left;
+    font-size: 45px;
+    margin: 0px;
+    
+}
+#baito{
+    float: left; 
+    width: 350px;
+}
+h3{
+    position: relative;
+    top: 20px;
+    left: 15px;
+}
+.effect {
+	width: 259px;
+    width: 194px;
+	position:relative;
+    
+    
+}
+.effect .caption {
+	font-size:130%;
+	text-align: center;
+	color:#fff;
+}
+.effect .mask {
+	width:259px;
+	height:114px;
+	position:absolute;
+	top:0;
+    
+	opacity:0;	/* マスクを表示しない */
+	background-color:rgba(0,0,0,0.4);
+	-webkit-transition:	all 0.6s ease;
+	transition:all 0.6s ease;
+}
+.effect:hover .mask {
+	opacity:1;	/* マスクを表示する */
+	padding-top:80px;	/* ホバーで下にずらす */
+}
+
+.certificate{
+    margin-top: 1500px;
+    margin-left: 220px;
+    
+}
+.www{
+    margin-left:60px ;
+}
+.certificate_picture{
+    width: 194px;
+    height: 259px;
+    margin: 20px;
+    
+    
+    
+}
+
+.certificate_picture1{
+    margin: 20px;
+    width: 259px; 
+    height: 194px;
+    position: relative;
+    bottom: 20px;
+    right: 20px;
+}
+.effect2{
+	width: 194px;
+    height: 259px;
+    margin: 20px;
+    position: relative;
+    float: left;
+    right: 20px;
+    bottom: 20px;
+    
+
+    
+}
+.effect2 .mask2{
+	width:214px;
+	height:169px;
+	position:absolute;
+	top:0;
+    opacity:0;	/* マスクを表示しない */
+	background-color:rgba(0,0,0,0.4);
+	-webkit-transition:	all 0.6s ease;
+	transition:all 0.6s ease;
+    left: 20px;
+    top: 20px; 
+
+}
+.effect2:hover .mask2 {
+	opacity:1;	/* マスクを表示する */
+	padding-top:110px;	/* ホバーで下にずらす */
+}
+.effect2:hover .certificate_picture{
+    width: 214px;
+    height: 279px;
+    position: absolute;
+    -webkit-transition:	all 0.6s ease;
+	transition:all 0.6s ease;
+}
+.effect2 .caption {
+	font-size:130%;
+	text-align: center;
+	color:#fff;
+}
+.effect3{
+	width: 259px;
+    height: 194px;
+    margin: 20px;
+    position: relative;
+    float: left;
+    
+    
+
+    
+}
+.effect3 .mask3{
+	width:279px;
+	height:154px;
+	position:absolute;
+	top:0;
+    opacity:0;	/* マスクを表示しない */
+	background-color:rgba(0,0,0,0.4);
+	-webkit-transition:	all 0.6s ease;
+	transition:all 0.6s ease;
+    
+
+}
+.effect3:hover .mask3{
+	opacity:1;	/* マスクを表示する */
+	padding-top:60px;	/* ホバーで下にずらす */
+}
+.effect3:hover .certificate_picture1{
+    width: 279px;
+    height: 214px;
+    margin: 20px;
+    -webkit-transition:	all 0.6s ease;
+	transition:all 0.6s ease;
+}
+.effect3 .caption {
+	font-size:130%;
+	text-align: center;
+	color:#fff;
+}
+footer{
+    background-color: white;
+    height: 150px;
+    
+    margin-bottom: -350px;
+}
+.icon{
+    width: 30px;
+    height: 30px;
+    float: left;
+}
+.sns{
+    float: left;
+    color: black;
+    text-decoration-line:none;
+    position: relative;
+    bottom: 13px;
+    margin-right: 30px;
+}
+.contact{
+    margin-top: 40px;
+    display: flex;
+  justify-content: center;
+
+}
