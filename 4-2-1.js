@@ -46,4 +46,20 @@ function ScrollTimelineAnime(){
 $(window).on('scroll', function(){
 	ScrollTimelineAnime();// 線が伸びる関数を呼ぶ
 });
-
+$(document).ready(function () {
+	
+	  hsize = $(window).height();
+	
+	  $(".top-wrapper").css("height", hsize + "px");
+	  $(".middle-wrapper1").css("margin-top", hsize + "px");
+	
+	 });
+	
+	 $(window).resize(function () {
+	 
+	  hsize = $(window).height();
+	
+	  $("/top-wrapper").css("height", hsize + "px");
+	  $(".middle-wrapper1").css("margin-top", hsize + "px");
+	
+	 });
