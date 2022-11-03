@@ -52,6 +52,7 @@ li{
 
 .top-wrapper{
     width: 100%;
+    height: 80vh;
     display: flex;
     -webkit-justify-content: space-between;
     justify-content: space-between;
@@ -83,11 +84,10 @@ li{
     z-index: 2;
     background-color: black;
     padding-top: 20px;
-    margin-top: px;
+    margin-top:80vh;;
     color: white;
     height: 800px;
-    position: relative;
-    top: 600px;
+    
 }
        
         
