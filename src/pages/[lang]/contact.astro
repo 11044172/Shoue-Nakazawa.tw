@@ -1,0 +1,13 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import socialLinks from "../../data/social-links.json";
+import profile from "../../data/profile.json";
+import { languages, type Lang, ui, withBase } from "../../utils/i18n";
+export function getStaticPaths(){return languages.map((lang)=>({params:{lang}}));}
+const lang=Astro.params.lang as Lang; const u=ui[lang];
+const links=socialLinks.filter((item)=>item.published&&item.url);
+---
+<BaseLayout {lang} title={`${u.contact} | Shoue Nakazawa`}>
+  <header class="page-hero container"><p class="eyebrow">Contact</p><h1>Let’s connect.</h1><p>{lang==="en"?"For collaboration, Web development, or professional conversations, please use one of the links below.":lang==="zh-tw"?"若有合作、Web 開發或職涯交流需求，請透過以下方式聯絡。":"共同開発、Web制作、仕事に関するご連絡は、以下の窓口をご利用ください。"}</p></header>
+  <section class="section"><div class="container card-grid">{links.map((item)=><article class="content-card"><h2 style="font-size:2rem">{item.label}</h2><a class="text-link" href={item.url} target={item.url.startsWith("http")?"_blank":undefined} rel={item.url.startsWith("http")?"noopener noreferrer":undefined}>{item.url.startsWith("mailto:")?item.url.replace("mailto:",""):item.label} ↗</a></article>)}{profile.cv&&<article class="content-card"><h2 style="font-size:2rem">CV</h2><a class="text-link" href={withBase(profile.cv)}>{u.viewCv}</a></article>}</div></section>
+</BaseLayout>

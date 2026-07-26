@@ -1,0 +1,76 @@
+---
+import { languages, type Lang, ui, withBase } from "../utils/i18n";
+const { lang, currentPath = "" } = Astro.props as { lang: Lang; currentPath?: string };
+const u = ui[lang];
+const home = withBase(`${lang}/`);
+const nav = [
+  [u.about, `${home}#about`],
+  [u.experience, `${home}#experience`],
+  [u.education, `${home}#education`],
+  [u.projects, withBase(`${lang}/projects/`)],
+  [u.skills, `${home}#skills`],
+  [u.story, withBase(`${lang}/story/`)],
+  [u.memories, withBase(`${lang}/memories/`)],
+  [u.contact, withBase(`${lang}/contact/`)]
+];
+const languageLabels = { ja: "日本語", "zh-tw": "繁體中文", en: "English" };
+const translatedPath = (target: Lang) => {
+  const rest = currentPath.replace(/^\/?(ja|zh-tw|en)\/?/, "");
+  return withBase(`${target}/${rest}`);
+};
+---
+<a class="skip-link" href="#main">{u.skip}</a>
+<header class="site-header" data-header>
+  <div class="header-inner">
+    <a class="brand" href={home} aria-label="Shoue Nakazawa home">
+      <span class="brand-mark">SN</span>
+      <span>Shoue Nakazawa</span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="sr-only">{u.menu}</span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      {nav.map(([label, href]) => <a href={href} aria-current={currentPath.includes(href.split("/").at(-2) || "___") ? "page" : undefined}>{label}</a>)}
+      <div class="header-actions">
+        <label class="language-select">
+          <span class="sr-only">Language</span>
+          <select data-language-select aria-label="Language">
+            {languages.map((code) => <option value={translatedPath(code)} selected={code === lang}>{languageLabels[code]}</option>)}
+          </select>
+        </label>
+        <button class="theme-toggle" type="button" aria-label={u.theme} title={u.theme}>
+          <span class="theme-icon" aria-hidden="true">◐</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+    const saved = localStorage.getItem("theme");
+    if (saved === "dark" || saved === "light") root.dataset.theme = saved;
+    const menu = document.querySelector(".menu-toggle");
+    const nav = document.querySelector("#site-nav");
+    menu?.addEventListener("click", () => {
+      const open = menu.getAttribute("aria-expanded") === "true";
+      menu.setAttribute("aria-expanded", String(!open));
+      nav?.classList.toggle("is-open", !open);
+    });
+    nav?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => {
+      menu?.setAttribute("aria-expanded", "false");
+      nav.classList.remove("is-open");
+    }));
+    document.querySelector(".theme-toggle")?.addEventListener("click", () => {
+      const systemDark = matchMedia("(prefers-color-scheme: dark)").matches;
+      const current = root.dataset.theme || (systemDark ? "dark" : "light");
+      const next = current === "dark" ? "light" : "dark";
+      root.dataset.theme = next;
+      localStorage.setItem("theme", next);
+    });
+    document.querySelector("[data-language-select]")?.addEventListener("change", (event) => {
+      const target = event.currentTarget;
+      if (target instanceof HTMLSelectElement) location.href = target.value;
+    });
+  })();
+</script>

@@ -1,0 +1,24 @@
+---
+import socialLinks from "../data/social-links.json";
+import { type Lang, ui, withBase } from "../utils/i18n";
+const { lang } = Astro.props as { lang: Lang };
+const u = ui[lang];
+---
+<footer class="site-footer" id="contact">
+  <div class="container footer-grid">
+    <div>
+      <p class="eyebrow">{u.contact}</p>
+      <h2>Let’s connect.</h2>
+      <p>Japan · Taiwan · Semiconductor · Web · AI</p>
+    </div>
+    <ul class="social-list" aria-label="Contact links">
+      {socialLinks.filter((item) => item.published && item.url).map((item) => (
+        <li><a href={item.url} target={item.url.startsWith("http") ? "_blank" : undefined} rel={item.url.startsWith("http") ? "noopener noreferrer" : undefined}>{item.label}<span aria-hidden="true">↗</span></a></li>
+      ))}
+    </ul>
+  </div>
+  <div class="container footer-bottom">
+    <small>© {new Date().getFullYear()} Shoue Nakazawa</small>
+    <a href={withBase(`${lang}/story/`)}>{u.story}</a>
+  </div>
+</footer>

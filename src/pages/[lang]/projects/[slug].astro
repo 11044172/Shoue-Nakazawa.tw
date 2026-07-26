@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { languages, type Lang, t, ui, withBase } from "../../../utils/i18n";
+export async function getStaticPaths(){
+  const projects=await getCollection("projects",({data})=>data.published);
+  return languages.flatMap((lang)=>projects.map((project)=>({params:{lang,slug:project.data.slug},props:{project}})));
+}
+const {project}=Astro.props; const lang=Astro.params.lang as Lang; const u=ui[lang];
+const links=[["GitHub",project.data.githubUrl],["Demo",project.data.demoUrl]].filter(([,url])=>url);
+const creativeWork={"@context":"https://schema.org","@type":"CreativeWork","name":t(project.data.title,lang),"description":t(project.data.summary,lang),"creator":{"@type":"Person","name":"Shoue Nakazawa"}};
+---
+<BaseLayout {lang} title={`${t(project.data.title,lang)} | Shoue Nakazawa`} description={t(project.data.summary,lang)} type="article">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(creativeWork)} />
+  <header class="page-hero container"><p class="eyebrow">Project / {t(project.data.status,lang)}</p><h1>{t(project.data.title,lang)}</h1><p>{t(project.data.summary,lang)}</p></header>
+  {project.data.image && <div class="container"><img src={withBase(project.data.image)} alt={t(project.data.imageAlt,lang)} width="1200" height="675" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:24px;background:var(--surface-2)" /></div>}
+  <section class="section"><div class="container project-detail-grid">
+    <div class="project-main">
+      {t(project.data.challenge,lang) && <section><h2>{u.challenge}</h2><p>{t(project.data.challenge,lang)}</p></section>}
+      {t(project.data.solution,lang) && <section><h2>{u.solution}</h2><p>{t(project.data.solution,lang)}</p></section>}
+      {project.data.features.length>0 && <section><h2>{u.features}</h2><ul>{project.data.features.map((item)=><li>{t(item,lang)}</li>)}</ul></section>}
+      {project.data.responsibilities.length>0 && <section><h2>{u.role}</h2><ul>{project.data.responsibilities.map((item)=><li>{t(item,lang)}</li>)}</ul></section>}
+    </div>
+    <aside class="project-sidebar"><ul class="detail-list"><li><strong>{u.status}</strong>{t(project.data.status,lang)}</li><li><strong>{u.period}</strong>{project.data.startDate||"TODO"}{project.data.current?" — Now":project.data.endDate?` — ${project.data.endDate}`:""}</li><li><strong>{u.technology}</strong><ul class="tag-list">{project.data.tags.map((tag)=><li>{tag}</li>)}</ul></li></ul>{links.length>0&&<div class="button-row">{links.map(([label,url])=><a class="button secondary" href={url} target="_blank" rel="noopener noreferrer">{label} ↗</a>)}</div>}</aside>
+  </div></section>
+</BaseLayout>

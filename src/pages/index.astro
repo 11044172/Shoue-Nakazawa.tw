@@ -1,0 +1,18 @@
+---
+import { withBase } from "../utils/i18n";
+const destination = withBase("ja/");
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Shoue Nakazawaの半導体・Web・AIポートフォリオと言語選択ページ。" />
+    <meta http-equiv="refresh" content={`0;url=${destination}`} />
+    <link rel="canonical" href={`https://11044172.github.io${destination}`} />
+    <title>Shoue Nakazawa</title>
+  </head>
+  <body>
+    <p><a href={destination}>日本語サイトへ移動</a> / <a href={withBase("zh-tw/")}>繁體中文</a> / <a href={withBase("en/")}>English</a></p>
+  </body>
+</html>

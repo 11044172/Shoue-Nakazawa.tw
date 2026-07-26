@@ -1,0 +1,46 @@
+{
+  "published": true,
+  "heroImage": "/assets/images/profile/shoue-beach.jpg",
+  "heroImageAlt": {
+    "ja": "海辺に立つ中澤祥慧",
+    "zhTw": "站在海邊的中澤祥慧",
+    "en": "Shoue Nakazawa standing by the sea"
+  },
+  "roles": {
+    "ja": ["Equipment Assistant Engineer", "Web & AI Developer"],
+    "zhTw": ["設備助理工程師", "Web・AI 開發者"],
+    "en": ["Equipment Assistant Engineer", "Web & AI Developer"]
+  },
+  "tagline": {
+    "ja": "半導体の現場経験と、Web・AI開発をつなぐ。",
+    "zhTw": "連結半導體現場經驗與 Web・AI 開發。",
+    "en": "Connecting semiconductor experience with Web and AI development."
+  },
+  "intro": {
+    "ja": "日本と台湾を舞台に、半導体製造装置の現場経験と、Web・AIを使ったプロダクト開発を積み重ねています。好奇心を行動へ変え、異なる文化と技術をつなぐことを大切にしています。",
+    "zhTw": "以日本與台灣為舞台，持續累積半導體製造設備的現場經驗，以及運用 Web・AI 的產品開發經驗。重視把好奇心化為行動，連結不同文化與技術。",
+    "en": "Across Japan and Taiwan, I am building hands-on semiconductor equipment experience alongside Web and AI product development. I value turning curiosity into action and connecting cultures through technology."
+  },
+  "keywords": ["Japan", "Taiwan", "Semiconductor", "Web Development", "AI Development", "Bilingual Communication", "Curiosity", "Action", "Learning", "Challenge"],
+  "current": {
+    "period": "2025/07–2026/08",
+    "organization": "JASM / TSMC Kumamoto",
+    "role": "Equipment Assistant Engineer",
+    "field": "WET / Cleaning"
+  },
+  "next": {
+    "period": "2026/09–",
+    "organization": {
+      "ja": "國立臺灣科技大學／国立台湾科技大学",
+      "zhTw": "國立臺灣科技大學",
+      "en": "National Taiwan University of Science and Technology"
+    },
+    "program": {
+      "ja": "先進半導體科技研究所 修士課程",
+      "zhTw": "先進半導體科技研究所 碩士班",
+      "en": "M.S., Graduate Institute of Advanced Semiconductor Technology"
+    },
+    "interests": ["Silicon Photonics", "Semiconductor Technology", "Semiconductor Devices", "Optoelectronic Integration"]
+  },
+  "cv": ""
+}

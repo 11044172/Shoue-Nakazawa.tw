@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Lightbox from "../../components/Lightbox.astro";
+import { languages, type Lang, t, ui, withBase } from "../../utils/i18n";
+export function getStaticPaths(){return languages.map((lang)=>({params:{lang}}));}
+const lang=Astro.params.lang as Lang; const u=ui[lang];
+const items=(await getCollection("achievements",({data})=>data.published)).sort((a,b)=>a.data.order-b.data.order);
+---
+<BaseLayout {lang} title={`${u.achievements} | Shoue Nakazawa`}>
+  <header class="page-hero container"><p class="eyebrow">Qualifications · Sports · Music · Leadership</p><h1>{u.achievements}</h1><p>{lang==="en"?"Verified records preserved from the legacy site, with uncertain formal details clearly marked for review.":lang==="zh-tw"?"保存舊網站中可確認的成就，未確認的正式資訊會清楚標示。":"旧サイトで確認できた実績を保存し、正式名称など未確認事項は明示しています。"}</p></header>
+  <section class="section"><div class="container card-grid">
+    {items.map((item)=><article class="content-card">
+      {item.data.image&&<button class="memory-item" type="button" data-lightbox data-src={withBase(item.data.image)} data-alt={t(item.data.imageAlt,lang)} data-caption={t(item.data.title,lang)}><img src={withBase(item.data.image)} alt={t(item.data.imageAlt,lang)} width="600" height="800" loading="lazy"/></button>}
+      <span class="date">{item.data.year} · {item.data.category}</span><h2 style="font-size:clamp(1.3rem,2.5vw,2rem)">{t(item.data.title,lang)}</h2><p>{t(item.data.summary,lang)}</p>
+    </article>)}
+  </div></section>
+  <Lightbox {lang}/>
+</BaseLayout>

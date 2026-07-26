@@ -1,0 +1,46 @@
+---
+import { type Lang, ui } from "../utils/i18n";
+const { lang } = Astro.props as { lang: Lang };
+const u = ui[lang];
+---
+<dialog class="lightbox" aria-label="Image preview">
+  <button class="lightbox-close" type="button" aria-label={u.close}>×</button>
+  <button class="lightbox-nav prev" type="button" aria-label={u.previous}>‹</button>
+  <figure>
+    <img src="" alt="" width="1200" height="800" />
+    <figcaption></figcaption>
+  </figure>
+  <button class="lightbox-nav next" type="button" aria-label={u.nextImage}>›</button>
+</dialog>
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>(".lightbox");
+  const image = dialog?.querySelector<HTMLImageElement>("img");
+  const caption = dialog?.querySelector<HTMLElement>("figcaption");
+  let items: HTMLButtonElement[] = [];
+  let index = 0;
+  const show = (nextIndex: number) => {
+    if (!dialog || !image || !caption || !items.length) return;
+    index = (nextIndex + items.length) % items.length;
+    const item = items[index];
+    image.src = item.dataset.src || "";
+    image.alt = item.dataset.alt || "";
+    caption.textContent = item.dataset.caption || "";
+  };
+  document.addEventListener("DOMContentLoaded", () => {
+    items = [...document.querySelectorAll<HTMLButtonElement>("[data-lightbox]")];
+    items.forEach((item, itemIndex) => item.addEventListener("click", () => {
+      index = itemIndex; show(index); dialog?.showModal();
+    }));
+    dialog?.querySelector(".lightbox-close")?.addEventListener("click", () => dialog.close());
+    dialog?.querySelector(".prev")?.addEventListener("click", () => show(index - 1));
+    dialog?.querySelector(".next")?.addEventListener("click", () => show(index + 1));
+    dialog?.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+    dialog?.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") show(index - 1);
+      if (event.key === "ArrowRight") show(index + 1);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && dialog?.open) dialog.close();
+    });
+  });
+</script>

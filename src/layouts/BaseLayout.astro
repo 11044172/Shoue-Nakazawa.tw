@@ -1,0 +1,61 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import site from "../data/site.json";
+import { type Lang, t, withBase } from "../utils/i18n";
+import "../styles/global.css";
+
+const { lang, title, description, image = site.ogImage, type = "website", breadcrumbs = [] } = Astro.props as {
+  lang: Lang; title?: string; description?: string; image?: string; type?: string; breadcrumbs?: {name:string;url:string}[];
+};
+const pageTitle = title || t(site.title, lang);
+const pageDescription = description || t(site.description, lang);
+const canonical = new URL(Astro.url.pathname, site.siteUrl).toString();
+const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+const absoluteImage = new URL(withBase(image), site.siteUrl).toString();
+const personLd = {
+  "@context": "https://schema.org", "@type": "Person", name: "Shoue Nakazawa", alternateName: "中澤祥慧",
+  url: site.siteUrl, knowsLanguage: ["ja", "zh-Hant", "en"], jobTitle: ["Equipment Assistant Engineer", "Web & AI Developer"]
+};
+const breadcrumbLd = breadcrumbs.length ? {
+  "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":breadcrumbs.map((item, i) => ({"@type":"ListItem","position":i+1,"name":item.name,"item":item.url}))
+} : null;
+---
+<!doctype html>
+<html lang={lang === "zh-tw" ? "zh-Hant" : lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="theme-color" content={site.seo.themeColor} />
+    <link rel="canonical" href={canonical} />
+    {(["ja","zh-tw","en"] as Lang[]).map((code) => <link rel="alternate" hreflang={code === "zh-tw" ? "zh-Hant-TW" : code} href={new URL(withBase(`${code}/${currentPath.replace(/^(ja|zh-tw|en)\/?/, "")}`), site.siteUrl).toString()} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(withBase(`ja/${currentPath.replace(/^(ja|zh-tw|en)\/?/, "")}`), site.siteUrl).toString()} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={absoluteImage} />
+    <meta property="og:locale" content={lang === "zh-tw" ? "zh_TW" : lang === "ja" ? "ja_JP" : "en_US"} />
+    <meta name="twitter:card" content={site.seo.twitterCard} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={absoluteImage} />
+    <link rel="icon" href={withBase("favicon/favicon.svg")} type="image/svg+xml" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personLd)} />
+    {breadcrumbLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />}
+    <script is:inline>
+      (() => {
+        const saved = localStorage.getItem("theme");
+        if (saved) document.documentElement.dataset.theme = saved;
+      })();
+    </script>
+  </head>
+  <body>
+    <Header {lang} {currentPath} />
+    <main id="main"><slot /></main>
+    <Footer {lang} />
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "Shoue Nakazawa",
+  "nameJa": "中澤祥慧",
+  "siteUrl": "https://11044172.github.io/Shoue-Nakazawa.tw/",
+  "defaultLanguage": "ja",
+  "title": {
+    "ja": "Shoue Nakazawa | 半導体・Web・AI ポートフォリオ",
+    "zhTw": "Shoue Nakazawa | 半導體・Web・AI 作品集",
+    "en": "Shoue Nakazawa | Semiconductor, Web & AI Portfolio"
+  },
+  "description": {
+    "ja": "日本と台湾で培った半導体の現場経験、Web・AI開発、学びと人生の記録をまとめた中澤祥慧のポートフォリオ。",
+    "zhTw": "中澤祥慧的個人作品集，記錄在日本與台灣累積的半導體現場經驗、Web・AI 開發、學習與人生故事。",
+    "en": "Shoue Nakazawa's portfolio connecting semiconductor field experience in Japan and Taiwan with Web and AI development."
+  },
+  "ogImage": "/assets/images/ogp/shoue-nakazawa-og.png",
+  "seo": {
+    "twitterCard": "summary_large_image",
+    "themeColor": "#0b1f33"
+  }
+}

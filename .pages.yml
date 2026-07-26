@@ -1,0 +1,443 @@
+media:
+  - name: images
+    label: 画像ライブラリ
+    input: public/assets/images
+    output: /assets/images
+    rename: safe
+    extensions: [jpg, jpeg, png, webp, avif]
+  - name: documents
+    label: CV・PDF・書類
+    input: public/assets/documents
+    output: /assets/documents
+    rename: safe
+    categories: [document]
+
+settings:
+  content:
+    merge: true
+  commit:
+    templates:
+      create: "content: {message}"
+      update: "content: {message}"
+      delete: "content: {message}"
+      uploadMedia: "media: {message}"
+      deleteMedia: "media: {message}"
+
+components:
+  localized_string:
+    type: object
+    fields:
+      - { name: ja, label: 日本語, type: string }
+      - { name: zhTw, label: 繁體中文, type: string }
+      - { name: en, label: English, type: string }
+  localized_text:
+    type: object
+    fields:
+      - { name: ja, label: 日本語, type: text }
+      - { name: zhTw, label: 繁體中文, type: text }
+      - { name: en, label: English, type: text }
+
+content:
+  - name: basics
+    label: サイト基本設定
+    type: group
+    items:
+      - name: site
+        label: サイト・SEO
+        type: file
+        path: src/data/site.json
+        format: json
+        fields:
+          - { name: name, label: 英語氏名, type: string, required: true }
+          - { name: nameJa, label: 日本語氏名, type: string, required: true }
+          - { name: siteUrl, label: 公開URL, type: string, required: true }
+          - { name: defaultLanguage, label: 既定言語, type: select, options: { values: [ja, zh-tw, en] } }
+          - name: title
+            label: ページタイトル
+            component: localized_string
+          - name: description
+            label: SEO説明
+            component: localized_text
+          - name: ogImage
+            label: OGP画像
+            type: image
+            options: { media: images, path: ogp }
+          - name: seo
+            label: SEO詳細
+            type: object
+            fields:
+              - { name: twitterCard, label: Xカード形式, type: select, options: { values: [summary, summary_large_image] } }
+              - { name: themeColor, label: テーマカラー, type: string }
+      - name: profile
+        label: プロフィール・ヒーロー
+        type: file
+        path: src/data/profile.json
+        format: json
+        fields:
+          - { name: published, label: 公開する, type: boolean }
+          - name: heroImage
+            label: メインプロフィール画像
+            type: image
+            options: { media: images, path: profile }
+          - name: heroImageAlt
+            label: 画像の説明（alt）
+            component: localized_string
+          - name: roles
+            label: 肩書き
+            type: object
+            fields:
+              - { name: ja, label: 日本語, type: string, list: true }
+              - { name: zhTw, label: 繁體中文, type: string, list: true }
+              - { name: en, label: English, type: string, list: true }
+          - name: tagline
+            label: キャッチコピー
+            component: localized_string
+          - name: intro
+            label: About・自己紹介
+            component: localized_text
+          - { name: keywords, label: キーワード, type: string, list: true }
+          - name: current
+            label: 現在
+            type: object
+            fields:
+              - { name: period, label: 期間, type: string }
+              - { name: organization, label: 会社・組織, type: string }
+              - { name: role, label: 職種, type: string }
+              - { name: field, label: 分野, type: string }
+          - name: next
+            label: 次のステップ
+            type: object
+            fields:
+              - { name: period, label: 期間, type: string }
+              - name: organization
+                label: 学校
+                component: localized_string
+              - name: program
+                label: 所属・課程
+                component: localized_string
+              - { name: interests, label: 研究関心, type: string, list: true }
+          - name: cv
+            label: CV
+            type: file
+            options: { media: documents, extensions: [pdf] }
+      - name: skills
+        label: 技術スキル
+        type: file
+        path: src/data/skills.json
+        format: json
+        list: true
+        fields:
+          - { name: category, label: カテゴリ, type: string }
+          - name: items
+            label: スキル
+            type: object
+            list:
+              collapsible: { collapsed: true, summary: "{name} / {context}" }
+            fields:
+              - { name: name, label: 技術名, type: string }
+              - { name: context, label: 経験区分, type: select, options: { values: ["Work Experience", "Personal Project", "University", "Learning", "Used Before", "University / Personal Project", "Personal Project / University", "Learning / Used Before"] } }
+      - name: languages
+        label: 語学
+        type: file
+        path: src/data/languages.json
+        format: json
+        list: true
+        fields:
+          - name: name
+            label: 言語名
+            component: localized_string
+          - name: level
+            label: レベル・資格
+            component: localized_string
+          - { name: score, label: スコア, type: string }
+      - name: social
+        label: SNS・連絡先
+        type: file
+        path: src/data/social-links.json
+        format: json
+        list: true
+        fields:
+          - { name: label, label: 名称, type: string }
+          - { name: url, label: URL・メール, type: string, description: "電話番号は公開リポジトリへ保存しないでください。" }
+          - { name: published, label: 公開する, type: boolean }
+      - name: interests
+        label: 趣味・関心
+        type: file
+        path: src/data/interests.json
+        format: json
+        list: true
+        fields:
+          - { name: name, label: 名称, type: string }
+          - name: image
+            label: 画像
+            type: image
+            options: { media: images, path: interests }
+          - { name: published, label: 公開する, type: boolean }
+
+  - name: professional
+    label: キャリア・学び
+    type: group
+    items:
+      - name: experience
+        label: 職歴・アルバイト
+        type: collection
+        path: src/content/experience
+        format: yaml-frontmatter
+        filename: { template: "{primary}.md", field: create }
+        view: { primary: "title.ja", fields: ["organization.ja", "startDate", "published", "featured"], sort: "order", order: "asc" }
+        fields:
+          - name: title
+            label: タイトル
+            component: localized_string
+          - name: organization
+            label: 会社・組織
+            component: localized_string
+          - name: role
+            label: 職種
+            component: localized_string
+          - name: summary
+            label: 短い説明
+            component: localized_text
+          - name: location
+            label: 場所
+            component: localized_string
+          - { name: category, label: カテゴリ, type: select, options: { values: [career, internship, part-time] } }
+          - { name: startDate, label: 開始年月, type: string }
+          - { name: endDate, label: 終了年月, type: string }
+          - { name: current, label: 現在継続中, type: boolean }
+          - name: image
+            label: メイン画像
+            type: image
+            options: { media: images, path: experience }
+          - name: imageAlt
+            label: 画像の説明（alt）
+            component: localized_string
+          - name: gallery
+            label: 複数画像
+            type: image
+            options: { media: images, path: experience, multiple: true, unique: true }
+          - { name: tags, label: キーワード, type: string, list: true }
+          - { name: order, label: 表示順, type: number }
+          - { name: published, label: 公開する, type: boolean }
+          - { name: featured, label: トップページに表示する, type: boolean }
+          - { name: body, label: 詳細本文, type: rich-text }
+      - name: education
+        label: 学歴
+        type: collection
+        path: src/content/education
+        format: yaml-frontmatter
+        filename: { template: "{primary}.md", field: create }
+        view: { primary: "title.ja", fields: ["level", "startDate", "published", "featured"], sort: "order", order: "asc" }
+        fields:
+          - name: title
+            label: タイトル
+            component: localized_string
+          - name: school
+            label: 学校名
+            component: localized_string
+          - name: program
+            label: 所属
+            component: localized_string
+          - name: degree
+            label: 学位・課程
+            component: localized_string
+          - name: summary
+            label: 短い説明・思い出
+            component: localized_text
+          - { name: level, label: 学校区分, type: select, options: { values: [graduate, university, high-school, junior-high, elementary, kindergarten] } }
+          - { name: startDate, label: 開始年月, type: string }
+          - { name: endDate, label: 終了年月, type: string }
+          - { name: current, label: 現在継続中, type: boolean }
+          - name: image
+            label: 学歴画像
+            type: image
+            options: { media: images, path: education }
+          - name: imageAlt
+            label: 画像の説明（alt）
+            component: localized_string
+          - { name: tags, label: キーワード, type: string, list: true }
+          - { name: order, label: 表示順, type: number }
+          - { name: published, label: 公開する, type: boolean }
+          - { name: featured, label: トップページに表示する, type: boolean }
+          - { name: body, label: 詳細本文, type: rich-text }
+      - name: projects
+        label: プロジェクト
+        type: collection
+        path: src/content/projects
+        format: yaml-frontmatter
+        filename: { template: "{slug}.md", field: create }
+        view: { primary: "title.ja", fields: ["slug", "published", "featured", "order"], sort: "order", order: "asc" }
+        fields:
+          - name: title
+            label: プロジェクト名
+            component: localized_string
+          - { name: slug, label: slug, type: string, required: true, pattern: "^[a-z0-9-]+$" }
+          - name: summary
+            label: 短い概要
+            component: localized_text
+          - name: status
+            label: 開発ステータス
+            component: localized_string
+          - name: challenge
+            label: 課題
+            component: localized_text
+          - name: solution
+            label: 解決方法
+            component: localized_text
+          - name: features
+            label: 主な機能
+            type: object
+            list: { collapsible: { collapsed: true, summary: "{ja}" } }
+            fields:
+              - { name: ja, label: 日本語, type: string }
+              - { name: zhTw, label: 繁體中文, type: string }
+              - { name: en, label: English, type: string }
+          - name: responsibilities
+            label: 担当範囲
+            type: object
+            list: { collapsible: { collapsed: true, summary: "{ja}" } }
+            fields:
+              - { name: ja, label: 日本語, type: string }
+              - { name: zhTw, label: 繁體中文, type: string }
+              - { name: en, label: English, type: string }
+          - { name: tags, label: 使用技術, type: string, list: true }
+          - name: image
+            label: メイン画像
+            type: image
+            options: { media: images, path: projects }
+          - name: imageAlt
+            label: 画像の説明（alt）
+            component: localized_string
+          - name: gallery
+            label: スクリーンショット
+            type: image
+            options: { media: images, path: projects, multiple: true, unique: true }
+          - { name: githubUrl, label: GitHub URL, type: string }
+          - { name: demoUrl, label: デモURL, type: string }
+          - { name: startDate, label: 制作開始, type: string }
+          - { name: endDate, label: 制作終了, type: string }
+          - { name: current, label: 現在継続中, type: boolean }
+          - { name: order, label: 表示順, type: number }
+          - { name: published, label: 公開する, type: boolean }
+          - { name: featured, label: トップページに表示する, type: boolean }
+          - { name: body, label: 詳細本文, type: rich-text }
+
+  - name: life_archive
+    label: 人生・思い出
+    type: group
+    items:
+      - name: timeline
+        label: My Story／人生年表
+        type: collection
+        path: src/content/timeline
+        format: yaml-frontmatter
+        filename: { template: "{year}-{primary}.md", field: create }
+        view: { primary: "title.ja", fields: ["year", "category", "published", "featured"], sort: "order", order: "asc" }
+        fields:
+          - name: title
+            label: タイトル
+            component: localized_string
+          - { name: year, label: 年・年代, type: string, required: true }
+          - { name: startDate, label: 開始年月, type: string }
+          - { name: endDate, label: 終了年月, type: string }
+          - { name: age, label: 年齢（任意・手動）, type: string }
+          - name: place
+            label: 場所
+            component: localized_string
+          - { name: category, label: カテゴリ, type: select, options: { values: ["Early Childhood", Kindergarten, "Elementary School", "Junior High School", "High School", University, Taiwan, "Study Abroad", "Part-time Work", Career, Semiconductor, "Graduate School", Sports, Music, Programming, Travel, Challenge, "Turning Point", Future] } }
+          - name: summary
+            label: 短い説明
+            component: localized_text
+          - name: image
+            label: メイン画像
+            type: image
+            options: { media: images, path: memories }
+          - name: imageAlt
+            label: 画像の説明（alt）
+            component: localized_string
+          - name: gallery
+            label: 複数画像
+            type: image
+            options: { media: images, path: memories, multiple: true, unique: true }
+          - { name: relatedProjects, label: 関連プロジェクトslug, type: string, list: true }
+          - { name: relatedAchievements, label: 関連実績ID, type: string, list: true }
+          - { name: tags, label: キーワード, type: string, list: true }
+          - { name: order, label: 表示順, type: number }
+          - { name: published, label: 公開する, type: boolean }
+          - { name: featured, label: 注目項目, type: boolean }
+          - { name: body, label: 詳細本文, type: rich-text }
+      - name: memories
+        label: Memories／写真
+        type: collection
+        path: src/content/memories
+        format: yaml-frontmatter
+        filename: { template: "{year}-{primary}.md", field: create }
+        view: { primary: "title.ja", fields: ["year", "category", "published", "featured"], sort: "order", order: "asc" }
+        fields:
+          - name: title
+            label: 管理用名称・タイトル
+            component: localized_string
+          - name: summary
+            label: 短い説明
+            component: localized_text
+          - name: caption
+            label: キャプション
+            component: localized_text
+          - { name: year, label: 撮影年, type: string }
+          - name: place
+            label: 撮影場所
+            component: localized_string
+          - { name: category, label: 関連カテゴリ, type: select, options: { values: [幼少期, 学校, 台湾, 友人, 留学, 仕事, スポーツ, 音楽, バイク, 旅行, 料理, プロジェクト, 証明書, その他] } }
+          - name: image
+            label: 画像ファイル
+            type: image
+            required: true
+            options: { media: images, path: gallery, extensions: [jpg, jpeg, png, webp, avif] }
+          - name: imageAlt
+            label: 画像の説明（alt）
+            component: localized_string
+          - name: gallery
+            label: 複数画像
+            type: image
+            options: { media: images, path: gallery, multiple: true, unique: true }
+          - { name: relatedStory, label: 関連ストーリーID, type: string }
+          - { name: order, label: 表示順, type: number }
+          - { name: published, label: 公開する, type: boolean }
+          - { name: featured, label: Featured, type: boolean }
+          - { name: showOnHome, label: トップページに表示する, type: boolean }
+          - { name: showOnStory, label: My Storyに表示する, type: boolean }
+          - { name: showInGallery, label: ギャラリーに表示する, type: boolean }
+          - { name: body, label: 詳細本文, type: rich-text }
+      - name: achievements
+        label: 実績・資格・証明書
+        type: collection
+        path: src/content/achievements
+        format: yaml-frontmatter
+        filename: { template: "{year}-{primary}.md", field: create }
+        view: { primary: "title.ja", fields: ["year", "category", "published", "featured"], sort: "order", order: "asc" }
+        fields:
+          - name: title
+            label: 名称
+            component: localized_string
+          - { name: year, label: 年, type: string }
+          - { name: category, label: カテゴリ, type: select, options: { values: [資格, 語学, スポーツ, 音楽, リーダーシップ, 大学合格実績, 証明書, "資格・スポーツ"] } }
+          - name: summary
+            label: 説明
+            component: localized_text
+          - name: image
+            label: 証明書画像
+            type: image
+            options: { media: images, path: achievements }
+          - name: imageAlt
+            label: 画像の説明（alt）
+            component: localized_string
+          - name: gallery
+            label: 関連写真
+            type: image
+            options: { media: images, path: achievements, multiple: true, unique: true }
+          - { name: relatedStory, label: My Story関連ID, type: string }
+          - { name: tags, label: キーワード, type: string, list: true }
+          - { name: order, label: 表示順, type: number }
+          - { name: published, label: 公開する, type: boolean }
+          - { name: featured, label: トップページに表示する, type: boolean }
+          - { name: body, label: 詳細本文, type: rich-text }

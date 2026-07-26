@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { languages, type Lang, t, ui, withBase } from "../../utils/i18n";
+export function getStaticPaths(){return languages.map((lang)=>({params:{lang}}));}
+const lang=Astro.params.lang as Lang; const u=ui[lang];
+const timeline=(await getCollection("timeline",({data})=>data.published)).sort((a,b)=>a.data.order-b.data.order);
+const categories=[...new Set(timeline.map((item)=>item.data.category))];
+---
+<BaseLayout {lang} title={`${u.story} | Shoue Nakazawa`} description={u.archiveLead}>
+  <header class="page-hero container"><p class="eyebrow">Personal Life Archive</p><h1>{u.story}</h1><p>{u.archiveLead}</p></header>
+  <section class="section section-warm"><div class="container">
+    <div class="filter-bar" aria-label="Timeline filters"><button class="filter-button" type="button" data-story-filter="all" aria-pressed="true">{u.filterAll}</button>{categories.map((category)=><button class="filter-button" type="button" data-story-filter={category} aria-pressed="false">{category}</button>)}</div>
+    <ol class="timeline-list">
+      {timeline.map((item)=><li class="timeline-item" data-story-category={item.data.category}>
+        <div class="timeline-year">{item.data.year}<br/><small>{item.data.category}</small></div>
+        <div class="timeline-content">
+          {item.data.image&&<img class="timeline-image" src={withBase(item.data.image)} alt={t(item.data.imageAlt,lang)} width="320" height="240" loading="lazy"/>}
+          <h2 style="font-size:clamp(1.4rem,3vw,2.2rem)">{t(item.data.title,lang)}</h2>
+          <p>{t(item.data.summary,lang)}</p>
+          {t(item.data.place,lang)&&<p><small>📍 {t(item.data.place,lang)}</small></p>}
+          <ul class="tag-list">{item.data.tags.map((tag)=><li>{tag}</li>)}</ul>
+        </div>
+      </li>)}
+    </ol>
+  </div></section>
+  <section class="section"><div class="container story-promo"><div><p class="eyebrow">Photo Archive</p><h2>{u.memories}</h2><p class="section-description">{u.memoriesLead}</p><a class="button" href={withBase(`${lang}/memories/`)}>{u.memories}</a></div></div></section>
+</BaseLayout>
+<script>
+  const buttons=[...document.querySelectorAll<HTMLButtonElement>("[data-story-filter]")];
+  const rows=[...document.querySelectorAll<HTMLElement>("[data-story-category]")];
+  buttons.forEach((button)=>button.addEventListener("click",()=>{
+    const value=button.dataset.storyFilter||"all";
+    buttons.forEach((b)=>b.setAttribute("aria-pressed",String(b===button)));
+    rows.forEach((row)=>row.hidden=value!=="all"&&row.dataset.storyCategory!==value);
+  }));
+</script>

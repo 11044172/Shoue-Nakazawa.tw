@@ -1,0 +1,10 @@
+[
+  {"name":"Soft Tennis","image":"/assets/images/interests/soft-tennis.jpg","published":true},
+  {"name":"Piano","image":"/assets/images/interests/piano.jpg","published":true},
+  {"name":"Cooking","image":"/assets/images/interests/cooking.jpg","published":true},
+  {"name":"Motorcycle","image":"","published":true},
+  {"name":"Travel","image":"","published":true},
+  {"name":"Programming","image":"","published":true},
+  {"name":"Web Development","image":"","published":true},
+  {"name":"Taiwan","image":"","published":true}
+]
