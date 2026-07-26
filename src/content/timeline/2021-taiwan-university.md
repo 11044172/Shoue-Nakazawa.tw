@@ -10,7 +10,7 @@ published: true
 featured: true
 order: 5
 image: "/assets/images/education/chuangyuan.jpeg"
-imageAlt: { ja: "中原大学の旧サイト掲載写真", zhTw: "舊網站中的中原大學照片", en: "CYCU photo from the legacy site" }
+imageAlt: { ja: "中原大学での台湾留学時代の写真", zhTw: "在中原大學留學時期的照片", en: "A photograph from study at CYCU in Taiwan" }
 tags: ["Taiwan", "Study Abroad", "Chinese", "Programming"]
 ---
 

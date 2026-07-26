@@ -5,33 +5,85 @@ import { languages, type Lang, t, ui, withBase } from "../../utils/i18n";
 export function getStaticPaths(){return languages.map((lang)=>({params:{lang}}));}
 const lang=Astro.params.lang as Lang; const u=ui[lang];
 const timeline=(await getCollection("timeline",({data})=>data.published)).sort((a,b)=>a.data.order-b.data.order);
-const categories=[...new Set(timeline.map((item)=>item.data.category))];
+const groupFor = (category:string) => {
+  if (["Kindergarten","Early Childhood"].includes(category)) return "childhood";
+  if (category === "Elementary School") return "elementary";
+  if (category === "Junior High School") return "junior";
+  if (category === "High School") return "high";
+  if (["University","Taiwan","Study Abroad"].includes(category)) return "university";
+  if (["Graduate School","Future"].includes(category)) return "future";
+  return "career";
+};
+const categoryLabels = {
+  ja:{childhood:"幼少期",elementary:"小学校",junior:"中学校",high:"高校",university:"大学・台湾留学",career:"キャリア",future:"大学院・未来"},
+  "zh-tw":{childhood:"幼兒時期",elementary:"國小",junior:"國中",high:"高中",university:"大學・台灣留學",career:"職涯",future:"研究所・未來"},
+  en:{childhood:"Early childhood",elementary:"Elementary",junior:"Junior high",high:"High school",university:"University & Taiwan",career:"Career",future:"Graduate study & future"}
+};
+const groups=[...new Set(timeline.map((item)=>groupFor(item.data.category)))];
 ---
 <BaseLayout {lang} title={`${u.story} | Shoue Nakazawa`} description={u.archiveLead}>
-  <header class="page-hero container"><p class="eyebrow">Personal Life Archive</p><h1>{u.story}</h1><p>{u.archiveLead}</p></header>
+  <header class="page-hero container"><p class="eyebrow">PERSONAL LIFE ARCHIVE</p><h1>{u.story}</h1><p>{u.archiveLead}</p></header>
   <section class="section section-warm"><div class="container">
-    <div class="filter-bar" aria-label="Timeline filters"><button class="filter-button" type="button" data-story-filter="all" aria-pressed="true">{u.filterAll}</button>{categories.map((category)=><button class="filter-button" type="button" data-story-filter={category} aria-pressed="false">{category}</button>)}</div>
-    <ol class="timeline-list">
-      {timeline.map((item)=><li class="timeline-item" data-story-category={item.data.category}>
-        <div class="timeline-year">{item.data.year}<br/><small>{item.data.category}</small></div>
+    <div class="filter-bar" aria-label={u.filterLabel}><button class="filter-button" type="button" data-story-filter="all" aria-pressed="true">{u.filterAll}</button>{groups.map((group)=><button class="filter-button" type="button" data-story-filter={group} aria-pressed="false">{categoryLabels[lang][group]}</button>)}</div>
+    <div class="story-timeline" data-story-timeline>
+      <div class="timeline-rail" aria-hidden="true"><span class="timeline-progress" data-timeline-progress></span><span class="timeline-dot" data-timeline-dot></span></div>
+      <ol class="timeline-list" aria-label={u.timelineLabel}>
+      {timeline.map((item,index)=><li class="timeline-item" data-story-category={groupFor(item.data.category)} data-story-index={index}>
+        <div class="timeline-year"><time>{item.data.year}</time><br/><small>{categoryLabels[lang][groupFor(item.data.category)]}</small></div>
         <div class="timeline-content">
           {item.data.image&&<img class="timeline-image" src={withBase(item.data.image)} alt={t(item.data.imageAlt,lang)} width="320" height="240" loading="lazy"/>}
-          <h2 style="font-size:clamp(1.4rem,3vw,2.2rem)">{t(item.data.title,lang)}</h2>
+          <h2>{t(item.data.title,lang)}</h2>
           <p>{t(item.data.summary,lang)}</p>
-          {t(item.data.place,lang)&&<p><small>📍 {t(item.data.place,lang)}</small></p>}
+          {t(item.data.place,lang)&&<p class="story-place"><span aria-hidden="true">⌖</span> {t(item.data.place,lang)}</p>}
           <ul class="tag-list">{item.data.tags.map((tag)=><li>{tag}</li>)}</ul>
         </div>
       </li>)}
-    </ol>
+      </ol>
+    </div>
   </div></section>
   <section class="section"><div class="container story-promo"><div><p class="eyebrow">Photo Archive</p><h2>{u.memories}</h2><p class="section-description">{u.memoriesLead}</p><a class="button" href={withBase(`${lang}/memories/`)}>{u.memories}</a></div></div></section>
 </BaseLayout>
 <script>
   const buttons=[...document.querySelectorAll<HTMLButtonElement>("[data-story-filter]")];
   const rows=[...document.querySelectorAll<HTMLElement>("[data-story-category]")];
+  const timeline=document.querySelector<HTMLElement>("[data-story-timeline]");
+  const progress=document.querySelector<HTMLElement>("[data-timeline-progress]");
+  const dot=document.querySelector<HTMLElement>("[data-timeline-dot]");
+  const reduceMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let ticking=false;
+  const clamp=(value:number,min:number,max:number)=>Math.min(max,Math.max(min,value));
+  const updateTimeline=()=>{
+    ticking=false;
+    if(!timeline||!progress||!dot||reduceMotion)return;
+    const visibleRows=rows.filter((row)=>!row.hidden);
+    if(!visibleRows.length)return;
+    const rail=timeline.getBoundingClientRect();
+    const viewportPoint=innerHeight*.48;
+    const ratio=clamp((viewportPoint-rail.top)/Math.max(rail.height,1),0,1);
+    progress.style.transform=`scaleY(${ratio})`;
+    dot.style.transform=`translate(-50%, -50%) translateY(${ratio*rail.height}px)`;
+    let nearest=visibleRows[0]; let distance=Infinity;
+    visibleRows.forEach((row)=>{
+      const rect=row.getBoundingClientRect();
+      const nextDistance=Math.abs(rect.top+rect.height/2-viewportPoint);
+      if(nextDistance<distance){distance=nextDistance;nearest=row;}
+    });
+    rows.forEach((row)=>{
+      const active=row===nearest;
+      row.classList.toggle("is-active",active);
+      if(active)row.setAttribute("aria-current","step"); else row.removeAttribute("aria-current");
+    });
+    dot.classList.toggle("is-near",distance<innerHeight*.28);
+  };
+  const requestUpdate=()=>{if(!ticking){ticking=true;requestAnimationFrame(updateTimeline);}};
   buttons.forEach((button)=>button.addEventListener("click",()=>{
     const value=button.dataset.storyFilter||"all";
     buttons.forEach((b)=>b.setAttribute("aria-pressed",String(b===button)));
     rows.forEach((row)=>row.hidden=value!=="all"&&row.dataset.storyCategory!==value);
+    requestAnimationFrame(updateTimeline);
   }));
+  addEventListener("scroll",requestUpdate,{passive:true});
+  addEventListener("resize",requestUpdate,{passive:true});
+  addEventListener("load",requestUpdate,{once:true});
+  requestUpdate();
 </script>

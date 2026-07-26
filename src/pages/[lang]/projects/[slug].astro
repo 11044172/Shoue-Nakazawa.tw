@@ -8,6 +8,7 @@ export async function getStaticPaths(){
 }
 const {project}=Astro.props; const lang=Astro.params.lang as Lang; const u=ui[lang];
 const links=[["GitHub",project.data.githubUrl],["Demo",project.data.demoUrl]].filter(([,url])=>url);
+const period=[project.data.startDate, project.data.current ? (lang==="ja"?"現在":lang==="zh-tw"?"現在":"Present") : project.data.endDate].filter(Boolean).join(" — ");
 const creativeWork={"@context":"https://schema.org","@type":"CreativeWork","name":t(project.data.title,lang),"description":t(project.data.summary,lang),"creator":{"@type":"Person","name":"Shoue Nakazawa"}};
 ---
 <BaseLayout {lang} title={`${t(project.data.title,lang)} | Shoue Nakazawa`} description={t(project.data.summary,lang)} type="article">
@@ -21,6 +22,6 @@ const creativeWork={"@context":"https://schema.org","@type":"CreativeWork","name
       {project.data.features.length>0 && <section><h2>{u.features}</h2><ul>{project.data.features.map((item)=><li>{t(item,lang)}</li>)}</ul></section>}
       {project.data.responsibilities.length>0 && <section><h2>{u.role}</h2><ul>{project.data.responsibilities.map((item)=><li>{t(item,lang)}</li>)}</ul></section>}
     </div>
-    <aside class="project-sidebar"><ul class="detail-list"><li><strong>{u.status}</strong>{t(project.data.status,lang)}</li><li><strong>{u.period}</strong>{project.data.startDate||"TODO"}{project.data.current?" — Now":project.data.endDate?` — ${project.data.endDate}`:""}</li><li><strong>{u.technology}</strong><ul class="tag-list">{project.data.tags.map((tag)=><li>{tag}</li>)}</ul></li></ul>{links.length>0&&<div class="button-row">{links.map(([label,url])=><a class="button secondary" href={url} target="_blank" rel="noopener noreferrer">{label} ↗</a>)}</div>}</aside>
+    <aside class="project-sidebar"><ul class="detail-list"><li><strong>{u.status}</strong>{t(project.data.status,lang)}</li>{period&&<li><strong>{u.period}</strong>{period}</li>}<li><strong>{u.technology}</strong><ul class="tag-list">{project.data.tags.map((tag)=><li>{tag}</li>)}</ul></li></ul>{links.length>0&&<div class="button-row">{links.map(([label,url])=><a class="button secondary" href={url} target="_blank" rel="noopener noreferrer">{label} ↗</a>)}</div>}</aside>
   </div></section>
 </BaseLayout>

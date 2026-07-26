@@ -1,6 +1,7 @@
 ---
 title: { ja: "LeanDevStudio", zhTw: "LeanDevStudio", en: "LeanDevStudio" }
 slug: "leandevstudio"
+category: "Web"
 summary: { ja: "Web制作・システム開発の実績を紹介する個人開発ブランド。", zhTw: "介紹 Web 製作與系統開發成果的個人開發品牌。", en: "A personal development brand presenting Web design and system development work." }
 status: { ja: "継続中", zhTw: "持續進行", en: "Ongoing" }
 challenge: { ja: "多言語で、事業と制作実績を分かりやすく伝えること。", zhTw: "以多語清楚傳達服務與製作成果。", en: "Communicate services and project work clearly across languages." }

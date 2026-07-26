@@ -37,5 +37,11 @@ for (const file of htmlFiles) {
   }
   if (/tel:/.test(html)) errors.push(`${path.relative(root,file)}: 電話番号リンクが含まれています`);
 }
+const storyHtml = fs.existsSync(path.join(dist, "ja/story/index.html"))
+  ? fs.readFileSync(path.join(dist, "ja/story/index.html"), "utf8")
+  : "";
+for (const marker of ["data-story-timeline", "data-timeline-progress", "data-timeline-dot", 'aria-label="中澤祥慧の人生年表"']) {
+  if (!storyHtml.includes(marker)) errors.push(`dist/ja/story/index.html: タイムライン要素が不足 ${marker}`);
+}
 if (errors.length) { console.error([...new Set(errors)].join("\n")); process.exit(1); }
 console.log(`Built-site validation passed (${htmlFiles.length} HTML files).`);

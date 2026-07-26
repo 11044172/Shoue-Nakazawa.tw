@@ -10,7 +10,7 @@ published: true
 featured: false
 order: 1
 image: "/assets/images/education/kendai.jpeg"
-imageAlt: { ja: "幼稚園の旧サイト掲載写真", zhTw: "舊網站中的幼兒園照片", en: "Kindergarten photo from the legacy site" }
+imageAlt: { ja: "幼稚園時代の写真", zhTw: "幼兒園時期的照片", en: "A photograph from kindergarten" }
 tags: ["Early Childhood", "Kindergarten"]
 ---
 

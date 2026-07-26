@@ -10,7 +10,7 @@ published: true
 featured: true
 order: 4
 image: "/assets/images/education/nouni.jpeg"
-imageAlt: { ja: "高校の旧サイト掲載写真", zhTw: "舊網站中的高中照片", en: "High school photo from the legacy site" }
+imageAlt: { ja: "高校時代の写真", zhTw: "高中時期的照片", en: "A photograph from high school" }
 tags: ["High School", "Part-time Work", "Programming"]
 ---
 

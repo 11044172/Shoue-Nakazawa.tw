@@ -5,14 +5,14 @@ const { project, lang } = Astro.props as { project: CollectionEntry<"projects">;
 const u = ui[lang];
 ---
 <article class="project-card">
-  {project.data.image && <img src={withBase(project.data.image)} alt={t(project.data.imageAlt, lang)} width="800" height="500" loading="lazy" decoding="async" />}
+  {project.data.image && <div class="project-media"><img src={withBase(project.data.image)} alt={t(project.data.imageAlt, lang)} width="800" height="500" loading="lazy" decoding="async" /></div>}
   <div class="project-card-body">
     <div class="card-meta"><span>{t(project.data.status, lang)}</span>{project.data.featured && <span>Featured</span>}</div>
     <h3><a href={withBase(`${lang}/projects/${project.data.slug}/`)}>{t(project.data.title, lang)}</a></h3>
     <p>{t(project.data.summary, lang)}</p>
     <ul class="tag-list" aria-label={u.technology}>
-      {project.data.tags.slice(0, 6).map((tag) => <li>{tag}</li>)}
+      {project.data.tags.slice(0, 5).map((tag) => <li>{tag}</li>)}
     </ul>
-    <a class="text-link" href={withBase(`${lang}/projects/${project.data.slug}/`)}>{u.viewProjects}<span aria-hidden="true"> ↗</span></a>
+    <a class="text-link" href={withBase(`${lang}/projects/${project.data.slug}/`)}>{u.caseStudy}<span aria-hidden="true"> →</span></a>
   </div>
 </article>

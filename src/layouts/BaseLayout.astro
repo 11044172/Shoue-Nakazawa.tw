@@ -17,6 +17,10 @@ const personLd = {
   "@context": "https://schema.org", "@type": "Person", name: "Shoue Nakazawa", alternateName: "中澤祥慧",
   url: site.siteUrl, knowsLanguage: ["ja", "zh-Hant", "en"], jobTitle: ["Equipment Assistant Engineer", "Web & AI Developer"]
 };
+const websiteLd = {
+  "@context": "https://schema.org", "@type": "WebSite", name: site.name,
+  url: site.siteUrl, inLanguage: ["ja", "zh-Hant-TW", "en"]
+};
 const breadcrumbLd = breadcrumbs.length ? {
   "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":breadcrumbs.map((item, i) => ({"@type":"ListItem","position":i+1,"name":item.name,"item":item.url}))
 } : null;
@@ -45,6 +49,7 @@ const breadcrumbLd = breadcrumbs.length ? {
     <meta name="twitter:image" content={absoluteImage} />
     <link rel="icon" href={withBase("favicon/favicon.svg")} type="image/svg+xml" />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(personLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteLd)} />
     {breadcrumbLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />}
     <script is:inline>
       (() => {

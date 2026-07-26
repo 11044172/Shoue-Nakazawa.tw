@@ -96,6 +96,32 @@ content:
             label: About・自己紹介
             component: localized_text
           - { name: keywords, label: キーワード, type: string, list: true }
+          - name: capabilities
+            label: 主要な強み（3本柱）
+            type: object
+            list: { collapsible: { collapsed: true, summary: "{key} / {title.ja}" } }
+            fields:
+              - { name: key, label: 番号, type: string }
+              - name: title
+                label: 見出し
+                component: localized_string
+              - name: description
+                label: 説明
+                component: localized_text
+              - { name: tags, label: キーワード, type: string, list: true }
+          - name: careerFocus
+            label: キャリアの接続点
+            type: object
+            fields:
+              - name: field
+                label: 現場で得た経験
+                component: localized_string
+              - name: study
+                label: 大学院で深める技術
+                component: localized_string
+              - name: future
+                label: 将来つなげたい領域
+                component: localized_string
           - name: current
             label: 現在
             type: object
@@ -135,7 +161,7 @@ content:
               collapsible: { collapsed: true, summary: "{name} / {context}" }
             fields:
               - { name: name, label: 技術名, type: string }
-              - { name: context, label: 経験区分, type: select, options: { values: ["Work Experience", "Personal Project", "University", "Learning", "Used Before", "University / Personal Project", "Personal Project / University", "Learning / Used Before"] } }
+              - { name: context, label: 経験区分, type: select, options: { values: ["Work Experience", "Personal Project", "University", "Learning", "Working Knowledge", "Previous Experience", "University / Personal Project", "Personal Project / University"] } }
       - name: languages
         label: 語学
         type: file
@@ -272,6 +298,7 @@ content:
             label: プロジェクト名
             component: localized_string
           - { name: slug, label: slug, type: string, required: true, pattern: "^[a-z0-9-]+$" }
+          - { name: category, label: 表示カテゴリ, type: select, options: { values: [Web, AI, SaaS, Concept] } }
           - name: summary
             label: 短い概要
             component: localized_text

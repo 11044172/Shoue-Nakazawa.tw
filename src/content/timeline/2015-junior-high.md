@@ -10,7 +10,7 @@ published: true
 featured: true
 order: 3
 image: "/assets/images/education/sanochuu.jpeg"
-imageAlt: { ja: "中学校の旧サイト掲載写真", zhTw: "舊網站中的國中照片", en: "Junior high school photo from the legacy site" }
+imageAlt: { ja: "中学校時代の写真", zhTw: "國中時期的照片", en: "A photograph from junior high school" }
 relatedAchievements: ["2017-soft-tennis", "2017-piano", "karate-shodan"]
 tags: ["Soft Tennis", "Music", "Leadership"]
 ---

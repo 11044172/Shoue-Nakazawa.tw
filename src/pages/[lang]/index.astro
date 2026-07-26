@@ -22,122 +22,130 @@ const featuredExperience = experiences.filter((item) => item.data.featured).sort
 const featuredEducation = education.filter((item) => item.data.featured).sort((a,b)=>a.data.order-b.data.order);
 const featuredProjects = projects.sort((a,b)=>a.data.order-b.data.order);
 const featuredAchievements = achievements.sort((a,b)=>a.data.order-b.data.order).slice(0,4);
+const startLabel = lang === "ja" ? "2026年9月 入学予定" : lang === "zh-tw" ? "預計 2026 年 9 月入學" : "Starting September 2026";
+const currentLabel = lang === "ja" ? "現在の所属" : lang === "zh-tw" ? "目前任職" : "Current role";
 ---
 <BaseLayout {lang}>
   <section class="hero">
     <div class="container hero-grid">
-      <div>
-        <p class="eyebrow">Semiconductor · Web · AI</p>
-        <h1><span class="hero-name-ja">中澤祥慧</span><span>Shoue</span><span>Nakazawa</span></h1>
+      <div class="hero-copy-block">
+        <p class="eyebrow hero-reveal" style="--delay: 0ms">SEMICONDUCTOR × WEB × AI</p>
+        <h1 class="hero-reveal" style="--delay: 70ms"><span class="hero-name-ja">中澤祥慧</span><span>Shoue Nakazawa</span></h1>
         <p class="hero-tagline">{t(profile.tagline, lang)}</p>
         <p class="hero-copy">{t(profile.intro, lang)}</p>
-        <ul class="role-list">{profile.roles[lang === "zh-tw" ? "zhTw" : lang].map((role) => <li>{role}</li>)}</ul>
         <div class="button-row">
           <a class="button" href={withBase(`${lang}/projects/`)}>{u.viewProjects}</a>
           <a class="button secondary" href={withBase(`${lang}/story/`)}>{u.viewStory}</a>
-          {profile.cv && <a class="button ghost" href={withBase(profile.cv)}>{u.viewCv}</a>}
-          <a class="button ghost" href={withBase(`${lang}/contact/`)}>{u.contactMe}</a>
-        </div>
-        <div class="hero-stats" aria-label="Focus">
-          <div><strong>WET / Cleaning</strong><span>Semiconductor</span></div>
-          <div><strong>Web & AI</strong><span>Product Development</span></div>
-          <div><strong>日本語・中文</strong><span>Japan × Taiwan</span></div>
         </div>
       </div>
       <figure class="hero-portrait">
         <img src={withBase(profile.heroImage)} alt={t(profile.heroImageAlt, lang)} width="756" height="1008" fetchpriority="high" decoding="async" />
+        <figcaption class="hero-status">
+          <span>{currentLabel}</span>
+          <strong>JASM / TSMC Kumamoto</strong>
+          <small>Equipment Assistant Engineer · WET / Cleaning</small>
+        </figcaption>
       </figure>
     </div>
   </section>
 
-  <section class="section section-tinted" id="about">
-    <div class="container about-grid">
-      <SectionHeading eyebrow="01 / About" title={u.about} description={t(profile.intro, lang)} />
-      <ul class="keyword-cloud">{profile.keywords.map((keyword) => <li>{keyword}</li>)}</ul>
-    </div>
-  </section>
-
-  <section class="section">
+  <section class="section section-tinted" id="profile">
     <div class="container">
-      <SectionHeading eyebrow="02 / Current Status" title={`${u.current} → ${u.next}`} />
-      <div class="status-grid">
-        <article class="status-card">
-          <p class="eyebrow">{u.current}</p><p class="period">{profile.current.period}</p>
-          <h3>{profile.current.organization}</h3><p>{profile.current.role}<br />{profile.current.field}</p>
+      <SectionHeading eyebrow="01 / CURRENT STATUS" title={`${u.current} → ${u.next}`} />
+      <div class="career-flow" aria-label={`${u.current}から${u.next}へのキャリア`}>
+        <article class="career-node current">
+          <p class="eyebrow">2025.07</p>
+          <h3>{profile.current.organization}</h3>
+          <p>{profile.current.role}<br />{profile.current.field}</p>
         </article>
-        <article class="status-card next">
-          <p class="eyebrow">{u.next}</p><p class="period">{profile.next.period}</p>
-          <h3>{t(profile.next.organization, lang)}</h3><p>{t(profile.next.program, lang)}</p>
-          <ul class="tag-list">{profile.next.interests.map((item) => <li>{item}</li>)}</ul>
+        <div class="career-connector" aria-hidden="true"><span></span></div>
+        <article class="career-node next">
+          <p class="eyebrow">2026.09</p>
+          <span class="status-pill">{startLabel}</span>
+          <h3>{t(profile.next.organization, lang)}</h3>
+          <p>{t(profile.next.program, lang)}</p>
         </article>
       </div>
+      <ul class="career-focus">
+        <li>{t(profile.careerFocus.field, lang)}</li>
+        <li>{t(profile.careerFocus.study, lang)}</li>
+        <li>{t(profile.careerFocus.future, lang)}</li>
+      </ul>
     </div>
   </section>
 
-  <section class="section section-tinted" id="experience">
+  <section class="section" id="projects">
     <div class="container">
-      <SectionHeading eyebrow="03 / Experience" title={u.experience} />
-      <div class="card-grid">
-        {featuredExperience.map((item) => <article class="content-card">
-          <span class="date">{item.data.startDate} — {item.data.endDate || "Now"}</span>
-          <h3>{t(item.data.organization, lang)}</h3><p><strong>{t(item.data.role, lang)}</strong></p>
-          <p>{t(item.data.summary, lang)}</p><ul class="tag-list">{item.data.tags.slice(0,7).map((tag)=><li>{tag}</li>)}</ul>
-        </article>)}
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="education">
-    <div class="container">
-      <SectionHeading eyebrow="04 / Education" title={u.education} />
-      <div class="card-grid">
-        {featuredEducation.map((item) => <article class="content-card">
-          {item.data.image && <img src={withBase(item.data.image)} alt={t(item.data.imageAlt, lang)} width="600" height="338" loading="lazy" />}
-          <span class="date">{item.data.startDate} — {item.data.endDate || "Now"}</span>
-          <h3>{t(item.data.school, lang)}</h3><p><strong>{t(item.data.program, lang)}</strong></p><p>{t(item.data.summary, lang)}</p>
-        </article>)}
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-tinted" id="projects">
-    <div class="container">
-      <SectionHeading eyebrow="05 / Selected Projects" title={`${u.selected} ${u.projects}`} />
+      <SectionHeading eyebrow="02 / FEATURED PROJECTS" title={`${u.selected} ${u.projects}`} description={lang === "ja" ? "技術の一覧ではなく、誰のどんな課題を解くのかを起点に設計したプロジェクトです。" : lang === "zh-tw" ? "從使用者問題出發，而不只是展示技術清單的專案。" : "Projects shaped around the people and problems they serve—not just their technology stacks."} />
       <div class="project-grid">{featuredProjects.map((project) => <ProjectCard {project} {lang} />)}</div>
       <div class="button-row"><a class="button secondary" href={withBase(`${lang}/projects/`)}>{u.viewAll}</a></div>
     </div>
   </section>
 
-  <section class="section" id="skills">
+  <section class="section section-tinted" id="experience">
     <div class="container">
-      <SectionHeading eyebrow="06 / Capabilities" title={u.skills} />
-      <div class="skills-grid">{skills.map((group)=><article class="skill-group"><h3>{group.category}</h3><ul class="skill-list">{group.items.map((item)=><li><span>{item.name}</span><small>{item.context}</small></li>)}</ul></article>)}</div>
+      <SectionHeading eyebrow="03 / PROFESSIONAL EXPERIENCE" title={u.experience} />
+      <div class="experience-list">
+        {featuredExperience.map((item) => <article class="experience-row reveal">
+          <div><span class="date">{item.data.startDate} — {item.data.endDate || "Now"}</span><p>{t(item.data.location, lang)}</p></div>
+          <div><h3>{t(item.data.organization, lang)}</h3><p><strong>{t(item.data.role, lang)}</strong></p><p>{t(item.data.summary, lang)}</p>
+          <ul class="tag-list">{item.data.tags.slice(0,5).map((tag)=><li>{tag}</li>)}</ul></div>
+        </article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="capabilities">
+    <div class="container">
+      <SectionHeading eyebrow="04 / CORE CAPABILITIES" title={u.capabilities} />
+      <div class="capability-grid">
+        {profile.capabilities.map((capability) => <article class="capability-card reveal">
+          <span class="capability-index">{capability.key}</span>
+          <h3>{t(capability.title, lang)}</h3>
+          <p>{t(capability.description, lang)}</p>
+          <ul class="tag-list">{capability.tags.map((tag) => <li>{tag}</li>)}</ul>
+        </article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bridge-section">
+    <div class="container bridge-grid">
+      <div>
+        <SectionHeading eyebrow="05 / JAPAN × TAIWAN" title={u.bridge} description={t(profile.capabilities[2].description, lang)} />
+        <div class="route-line" aria-hidden="true"><span>GUNMA</span><i></i><span>TAOYUAN</span><i></i><span>KUMAMOTO</span><i></i><span>TAIPEI</span></div>
+      </div>
+      <div class="language-grid">{languageData.map((item,index)=><article class:list={["language-card", { featured:index===1 }]}><span>0{index+1}</span><h3>{t(item.name, lang)}</h3><p>{t(item.level, lang)}</p>{index===1 && <small>Taiwan · 4 years</small>}</article>)}</div>
     </div>
   </section>
 
   <section class="section section-tinted">
     <div class="container">
-      <SectionHeading eyebrow="07 / Languages" title="Languages" />
-      <div class="language-grid">{languageData.map((item)=><article class="language-card"><h3>{t(item.name, lang)}</h3><p>{t(item.level, lang)}</p></article>)}</div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <SectionHeading eyebrow="08 / Achievements" title={`${u.selected} ${u.achievements}`} />
-      <div class="card-grid">{featuredAchievements.map((item)=><article class="content-card"><span class="date">{item.data.year}</span><h3>{t(item.data.title, lang)}</h3><p>{t(item.data.summary, lang)}</p></article>)}</div>
-      <div class="button-row"><a class="button secondary" href={withBase(`${lang}/achievements/`)}>{u.viewAll}</a></div>
+      <SectionHeading eyebrow="06 / SKILLS" title={u.skills} />
+      <div class="skills-grid">{skills.map((group)=><article class="skill-group reveal"><h3>{group.category}</h3><ul class="skill-list">{group.items.map((item)=><li><span>{item.name}</span><small>{item.context}</small></li>)}</ul></article>)}</div>
     </div>
   </section>
 
   <section class="section section-warm">
     <div class="container story-promo">
-      <div><p class="eyebrow">09 / Personal Life Archive</p><h2>{u.story}</h2><p class="section-description">{u.archiveLead}</p><div class="button-row"><a class="button" href={withBase(`${lang}/story/`)}>{u.viewStory}</a><a class="button secondary" href={withBase(`${lang}/memories/`)}>{u.memories}</a></div></div>
+      <div><p class="eyebrow">07 / PERSONAL LIFE ARCHIVE</p><h2>{u.story}</h2><p class="section-description">{u.archiveLead}</p><div class="archive-summary"><span>{featuredEducation.length} {u.education}</span><span>{featuredAchievements.length} {u.achievements}</span><span>{interests.filter((x)=>x.published).length} Interests</span></div><div class="button-row"><a class="button" href={withBase(`${lang}/story/`)}>{u.viewStory}</a><a class="button secondary" href={withBase(`${lang}/memories/`)}>{u.memories}</a></div></div>
       <div class="story-promo-image"><img src={withBase("/assets/images/memories/taiwan-life.jpg")} alt={lang === "en" ? "A personal memory from life in Taiwan" : lang === "zh-tw" ? "台灣生活的個人回憶" : "台湾生活の思い出"} width="756" height="1008" loading="lazy" /></div>
     </div>
   </section>
-
-  <section class="section">
-    <div class="container"><SectionHeading eyebrow="10 / Interests" title="Beyond work" /><ul class="keyword-cloud">{interests.filter((x)=>x.published).map((item)=><li>{item.name}</li>)}</ul></div>
-  </section>
 </BaseLayout>
+<script>
+  const revealItems = document.querySelectorAll<HTMLElement>(".reveal");
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) revealItems.forEach((item) => item.classList.add("is-visible"));
+  else {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .14 });
+    revealItems.forEach((item) => observer.observe(item));
+  }
+</script>

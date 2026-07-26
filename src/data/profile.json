@@ -22,6 +22,67 @@
     "en": "Across Japan and Taiwan, I am building hands-on semiconductor equipment experience alongside Web and AI product development. I value turning curiosity into action and connecting cultures through technology."
   },
   "keywords": ["Japan", "Taiwan", "Semiconductor", "Web Development", "AI Development", "Bilingual Communication", "Curiosity", "Action", "Learning", "Challenge"],
+  "capabilities": [
+    {
+      "key": "01",
+      "title": {
+        "ja": "半導体の現場経験",
+        "zhTw": "半導體現場經驗",
+        "en": "Semiconductor Field Experience"
+      },
+      "description": {
+        "ja": "JASM／TSMC熊本工場のWET・Cleaning Equipment分野で、安全、保全、異常対応、チーム連携に取り組んでいます。",
+        "zhTw": "在 JASM／台積電熊本廠的 WET・Cleaning Equipment 領域，投入安全、保養、異常處理與團隊協作。",
+        "en": "Hands-on work in WET and cleaning equipment at JASM / TSMC Kumamoto, focused on safety, maintenance, troubleshooting, and teamwork."
+      },
+      "tags": ["WET / Cleaning", "Maintenance", "Safety"]
+    },
+    {
+      "key": "02",
+      "title": {
+        "ja": "Web・AIプロダクト開発",
+        "zhTw": "Web・AI 產品開發",
+        "en": "Web & AI Product Development"
+      },
+      "description": {
+        "ja": "Django、OpenAI API、LINE Messaging APIを組み合わせ、実際の業務課題からWebサービスを設計・開発しています。",
+        "zhTw": "結合 Django、OpenAI API 與 LINE Messaging API，從實際營運問題出發設計與開發 Web 服務。",
+        "en": "Designing and building Web services around real operational problems with Django, the OpenAI API, and the LINE Messaging API."
+      },
+      "tags": ["Django", "OpenAI API", "SaaS"]
+    },
+    {
+      "key": "03",
+      "title": {
+        "ja": "日本と台湾をつなぐ",
+        "zhTw": "連結日本與台灣",
+        "en": "Japan–Taiwan Bridge"
+      },
+      "description": {
+        "ja": "台湾で4年間学び生活した経験と中国語TOCFL C1を活かし、文化と言語の違いを越えた協働を大切にしています。",
+        "zhTw": "運用在台灣四年的學習與生活經驗，以及中文 TOCFL C1 能力，重視跨越文化與語言差異的合作。",
+        "en": "Bringing four years of study and life in Taiwan and TOCFL C1 Chinese to collaboration across cultures and languages."
+      },
+      "tags": ["日本語 Native", "中文 TOCFL C1", "Taiwan 4 years"]
+    }
+  ],
+  "careerFocus": {
+    "field": {
+      "ja": "現場で得た経験：設備・安全・保全・異常対応",
+      "zhTw": "現場經驗：設備、安全、保養與異常處理",
+      "en": "Field experience: equipment, safety, maintenance, and troubleshooting"
+    },
+    "study": {
+      "ja": "大学院で深める技術：半導体技術・デバイス、Silicon Photonics",
+      "zhTw": "研究所深化：半導體技術與元件、矽光子",
+      "en": "Graduate focus: semiconductor technology and devices, silicon photonics"
+    },
+    "future": {
+      "ja": "将来つなげたい領域：半導体の現場とWeb・AIプロダクト",
+      "zhTw": "未來連結：半導體現場與 Web・AI 產品",
+      "en": "Future connection: semiconductor operations and Web / AI products"
+    }
+  },
   "current": {
     "period": "2025/07–2026/08",
     "organization": "JASM / TSMC Kumamoto",
@@ -29,7 +90,7 @@
     "field": "WET / Cleaning"
   },
   "next": {
-    "period": "2026/09–",
+    "period": "2026/09–2028 (Expected)",
     "organization": {
       "ja": "國立臺灣科技大學／国立台湾科技大学",
       "zhTw": "國立臺灣科技大學",

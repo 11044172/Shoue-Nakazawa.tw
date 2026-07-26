@@ -4,13 +4,10 @@ const { lang, currentPath = "" } = Astro.props as { lang: Lang; currentPath?: st
 const u = ui[lang];
 const home = withBase(`${lang}/`);
 const nav = [
-  [u.about, `${home}#about`],
+  [u.profile, `${home}#profile`],
   [u.experience, `${home}#experience`],
-  [u.education, `${home}#education`],
   [u.projects, withBase(`${lang}/projects/`)],
-  [u.skills, `${home}#skills`],
   [u.story, withBase(`${lang}/story/`)],
-  [u.memories, withBase(`${lang}/memories/`)],
   [u.contact, withBase(`${lang}/contact/`)]
 ];
 const languageLabels = { ja: "日本語", "zh-tw": "繁體中文", en: "English" };
@@ -30,7 +27,12 @@ const translatedPath = (target: Lang) => {
       <span class="sr-only">{u.menu}</span><span aria-hidden="true"></span><span aria-hidden="true"></span>
     </button>
     <nav id="site-nav" class="site-nav" aria-label="Primary">
-      {nav.map(([label, href]) => <a href={href} aria-current={currentPath.includes(href.split("/").at(-2) || "___") ? "page" : undefined}>{label}</a>)}
+      {nav.map(([label, href]) => {
+        const section = href.includes("#") ? href.split("#")[1] : "";
+        const pagePart = href.split("/").filter(Boolean).at(-1) || "";
+        const current = section ? undefined : currentPath.includes(`/${pagePart}/`) ? "page" : undefined;
+        return <a href={href} data-nav-section={section || undefined} aria-current={current}>{label}</a>;
+      })}
       <div class="header-actions">
         <label class="language-select">
           <span class="sr-only">Language</span>
@@ -52,15 +54,33 @@ const translatedPath = (target: Lang) => {
     if (saved === "dark" || saved === "light") root.dataset.theme = saved;
     const menu = document.querySelector(".menu-toggle");
     const nav = document.querySelector("#site-nav");
-    menu?.addEventListener("click", () => {
-      const open = menu.getAttribute("aria-expanded") === "true";
-      menu.setAttribute("aria-expanded", String(!open));
-      nav?.classList.toggle("is-open", !open);
-    });
+    let previousFocus = null;
+    const setMenu = (open) => {
+      if (!(menu instanceof HTMLElement) || !(nav instanceof HTMLElement)) return;
+      menu.setAttribute("aria-expanded", String(open));
+      nav.classList.toggle("is-open", open);
+      document.body.classList.toggle("menu-open", open);
+      if (open) {
+        previousFocus = document.activeElement;
+        nav.querySelector("a,button,select")?.focus();
+      } else if (previousFocus instanceof HTMLElement) {
+        previousFocus.focus();
+      }
+    };
+    menu?.addEventListener("click", () => setMenu(menu.getAttribute("aria-expanded") !== "true"));
     nav?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => {
-      menu?.setAttribute("aria-expanded", "false");
-      nav.classList.remove("is-open");
+      if (menu?.getAttribute("aria-expanded") === "true") setMenu(false);
     }));
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu?.getAttribute("aria-expanded") === "true") setMenu(false);
+      if (event.key !== "Tab" || menu?.getAttribute("aria-expanded") !== "true" || !(nav instanceof HTMLElement)) return;
+      const focusable = [...nav.querySelectorAll("a,button,select")].filter((item) => item instanceof HTMLElement && !item.hasAttribute("disabled"));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    });
     document.querySelector(".theme-toggle")?.addEventListener("click", () => {
       const systemDark = matchMedia("(prefers-color-scheme: dark)").matches;
       const current = root.dataset.theme || (systemDark ? "dark" : "light");
@@ -72,5 +92,15 @@ const translatedPath = (target: Lang) => {
       const target = event.currentTarget;
       if (target instanceof HTMLSelectElement) location.href = target.value;
     });
+    const sectionLinks = [...document.querySelectorAll("[data-nav-section]")];
+    const sections = sectionLinks.map((link) => document.getElementById(link.dataset.navSection)).filter(Boolean);
+    if (sections.length) {
+      const observer = new IntersectionObserver((entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        sectionLinks.forEach((link) => link.toggleAttribute("data-active", link.dataset.navSection === visible.target.id));
+      }, { rootMargin: "-25% 0px -60% 0px", threshold: [0, .2, .5] });
+      sections.forEach((section) => observer.observe(section));
+    }
   })();
 </script>

@@ -1,6 +1,6 @@
 ---
 title: { ja: "高崎市体操競技大会 第一位", zhTw: "高崎市體操競技比賽 第一名", en: "Takasaki Gymnastics Competition — 1st place" }
-summary: { ja: "旧サイトの証明書画像と説明から移行。", zhTw: "依舊網站的證書圖片與說明移轉。", en: "Migrated from the legacy certificate and description." }
+summary: { ja: "高崎市の体操競技大会で第一位を記録しました。", zhTw: "在高崎市體操競技比賽中獲得第一名。", en: "Placed first in a Takasaki gymnastics competition." }
 year: "2014"
 category: "スポーツ"
 image: "/assets/images/achievements/S__7446536.jpg"

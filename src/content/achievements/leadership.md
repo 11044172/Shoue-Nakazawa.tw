@@ -1,6 +1,6 @@
 ---
 title: { ja: "委員長・リーダー経験", zhTw: "委員長與領導經驗", en: "Committee and leadership roles" }
-summary: { ja: "旧サイトには2015年班代表、2016年放送委員長、2018年体育委員長の任命書が保存されています。", zhTw: "舊網站保存了 2015 年班代、2016 年廣播委員長、2018 年體育委員長的任命書。", en: "Legacy records include appointments as class representative (2015), broadcasting committee chair (2016), and sports committee chair (2018)." }
+summary: { ja: "2015年の班代表、2016年の放送委員長、2018年の体育委員長を経験しました。", zhTw: "曾擔任 2015 年班代、2016 年廣播委員長與 2018 年體育委員長。", en: "Served as class representative in 2015, broadcasting committee chair in 2016, and sports committee chair in 2018." }
 year: "2015–2018"
 category: "リーダーシップ"
 image: "/assets/images/achievements/S__7446540.jpg"

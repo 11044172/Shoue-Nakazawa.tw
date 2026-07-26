@@ -1,6 +1,6 @@
 ---
 title: { ja: "高崎市市民体育大会 ソフトテニス 第一位", zhTw: "高崎市市民體育比賽 軟式網球 第一名", en: "Takasaki Citizens Sports Tournament — Soft Tennis, 1st place" }
-summary: { ja: "旧サイトの証明書画像と説明から移行。", zhTw: "依舊網站的證書圖片與說明移轉。", en: "Migrated from the certificate image and description on the legacy site." }
+summary: { ja: "高崎市市民体育大会のソフトテニスで第一位を記録しました。", zhTw: "在高崎市市民體育大會軟式網球項目中獲得第一名。", en: "Placed first in soft tennis at the Takasaki Citizens Sports Tournament." }
 year: "2017"
 category: "スポーツ"
 image: "/assets/images/achievements/S__7446542.jpg"

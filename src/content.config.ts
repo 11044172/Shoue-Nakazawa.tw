@@ -46,6 +46,7 @@ const projects = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
   schema: common.extend({
     slug: z.string(),
+    category: z.enum(["Web", "AI", "SaaS", "Concept"]).default("Web"),
     status: localized,
     challenge: localized.default({ ja: "", zhTw: "", en: "" }),
     solution: localized.default({ ja: "", zhTw: "", en: "" }),

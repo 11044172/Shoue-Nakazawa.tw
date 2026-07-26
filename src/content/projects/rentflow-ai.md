@@ -1,6 +1,7 @@
 ---
 title: { ja: "RentFlow AI", zhTw: "RentFlow AI", en: "RentFlow AI" }
 slug: "rentflow-ai"
+category: "SaaS"
 summary:
   ja: "台湾のレンタカー・レンタルバイク店舗向けLINE AI予約SaaS。予約業務と会話型AIをつなぐ個人開発プロジェクト。"
   zhTw: "面向台灣租車與機車出租店家的 LINE AI 預約 SaaS，連結預約營運與對話式 AI。"
@@ -20,7 +21,7 @@ published: true
 featured: true
 order: 1
 image: "/assets/images/projects/IMG_3572.png"
-imageAlt: { ja: "RentFlow AIの旧制作資料", zhTw: "RentFlow AI 的舊製作資料", en: "Legacy development material for RentFlow AI" }
+imageAlt: { ja: "RentFlow AIの予約サービス画面", zhTw: "RentFlow AI 預約服務畫面", en: "RentFlow AI reservation service interface" }
 tags: ["Django", "PostgreSQL", "LINE Messaging API", "OpenAI API", "Structured Outputs", "Multi-tenant SaaS", "Reservation Management", "AI Agent", "Traditional Chinese UI"]
 githubUrl: ""
 demoUrl: ""

@@ -10,7 +10,7 @@ published: true
 featured: true
 order: 2
 image: "/assets/images/education/sanoshou.jpeg"
-imageAlt: { ja: "小学校の旧サイト掲載写真", zhTw: "舊網站中的國小照片", en: "Elementary school photo from the legacy site" }
+imageAlt: { ja: "小学校時代の写真", zhTw: "國小時期的照片", en: "A photograph from elementary school" }
 tags: ["School Band", "Karate", "Piano", "Gymnastics"]
 ---
 

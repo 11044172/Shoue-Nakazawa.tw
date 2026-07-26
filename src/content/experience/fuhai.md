@@ -3,9 +3,9 @@ title: { ja: "福海智趣科技公司", zhTw: "福海智趣科技公司", en: "
 organization: { ja: "福海智趣科技公司", zhTw: "福海智趣科技公司", en: "Fuhai Technology" }
 role: { ja: "International Business Development Intern", zhTw: "國際商務開發實習生", en: "International Business Development Intern" }
 summary:
-  ja: "国際ビジネス開発のインターンシップ。旧サイトに詳細がないため、具体的な業務内容は本人確認後に追記予定です。"
-  zhTw: "國際商務開發實習經驗。舊網站沒有具體內容，詳細職務將在本人確認後補充。"
-  en: "International business development internship. Detailed responsibilities await personal verification."
+  ja: "台湾企業で国際ビジネス開発のインターンシップを経験しました。"
+  zhTw: "曾在台灣企業參與國際商務開發實習。"
+  en: "Completed an international business development internship at a company in Taiwan."
 location: { ja: "台湾", zhTw: "台灣", en: "Taiwan" }
 category: internship
 startDate: "2024-06"
